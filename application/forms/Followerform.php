@@ -6,7 +6,7 @@ Class Application_Form_Followerform extends Zend_Form
         parent::init($options);
         
         $this->setMethod("POST")
-             ->setAction("/index.php/index");
+             ->setAction("/index/");
         
         $twitterHandle = new Zend_Form_Element_Text('twitterhandle');
         $twitterHandle->setDecorators(array('ViewHelper'))
