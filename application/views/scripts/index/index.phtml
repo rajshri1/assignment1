@@ -18,7 +18,7 @@
     </header>
 
     <span id="loading-img" class="none loadingimg">
-        <img src="../images/loading_img.gif"/>
+        <img src="/images/loading_img.gif"/>
     </span>
     <div id="followers-details">
 
@@ -45,7 +45,7 @@
         $("#loading-img").removeClass('none');
         
         $.ajax({
-                    url:'../index.php/index/follower-details/',
+                    url:'/index/follower-details/',
                     type:'GET',
                     data:'twitterhandle='+twitterId+'&page='+page+'&cursor='+cursor,
                     success:function(data)
