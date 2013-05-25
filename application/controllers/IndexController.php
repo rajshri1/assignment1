@@ -73,7 +73,6 @@ class IndexController extends Zend_Controller_Action
                     
                     $followerSession['followerArr'] = $followerArr = (($this->sessionValue['followerArr'] > 0 )?array_merge($followerDetails->users,$this->sessionValue['followerArr']):$followerDetails->users);
                     $this->_helper->Session()->session_val = $followerSession;
-
                 }
                 
                 if(count($followerArr) > 0)
