@@ -1,12 +1,8 @@
-<?php if ($this->pageCount): ?> 
+<?php 
+if ($this->pageCount): ?> 
 <div class="pagination" style="width:100%">
     <div style="margin-top:10px;float:right;">
-        <!-- First page link -->
-        <?php if (!isset($this->previous)):?>
-              <a href="javascript:void(0);" onclick="getFollowerDetails('1','<?php echo $this->twitterhandle;?>','');return false;">First</a> |
-        <?php endif; ?>    
         <!-- Previous page link -->
-    
         <?php if (isset($this->previous)): ?>
               <a href="javascript:void(0);" onclick="getFollowerDetails('<?php echo $this->previous;?>','<?php echo $this->twitterhandle;?>','');return false;">&lt; Previous</a> |
         <?php else: ?>
@@ -15,7 +11,7 @@
         <!-- Numbered page links -->
         <?php foreach ($this->pagesInRange as $page):?>
             <?php if ($page != $this->current): ?>
-                <a href="javascript:void(0);" onclick="getFollowerDetails('<?php echo $page;?>','<?php echo $this->twitterhandle;?>','');return false;"><?php echo $page;?></a>
+                <a href="javascript:void(0);" onclick="getFollowerDetails('<?php echo $page;?>','<?php echo $this->twitterhandle;?>','<?php echo ((($page == $this->pageCount) && $this->nextCursor != 0)?$this->nextCursor:'');?>');return false;"><?php echo $page;?></a>
             <?php else: ?>
                 <?php echo $page; ?>
             <?php endif; ?>
@@ -28,4 +24,4 @@
         <?php endif; ?>
     </div>
  </div>
-<?php endif; ?>  
+<?php endif; ?>
