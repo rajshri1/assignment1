@@ -26,6 +26,14 @@
 </section>
 
 <script type="text/javascript">
+    var sessionScreenName = "<?php echo strtolower($this->sessionValue['screen_name']);?>";
+    $(document).ready(function()
+    {
+        if(sessionScreenName)
+        {
+           location.href = "/index/destroy-session";
+        }
+    });
     function getList()
     {
         var twitterHandle = jQuery.trim($("#twitterhandle").val());
@@ -40,12 +48,12 @@
     }
 
     function getFollowerDetails(page,twitterId,cursor)
-    {alert(page);
+    {
         $("#followers-details").html('');
         $("#loading-img").removeClass('none');
         
         $.ajax({
-                    url:'/index/follower-details/',
+                    url:'/index/follower-details',
                     type:'GET',
                     data:'twitterhandle='+twitterId+'&page='+page+'&cursor='+cursor,
                     success:function(data)
