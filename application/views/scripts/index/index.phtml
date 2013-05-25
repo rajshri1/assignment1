@@ -1,0 +1,61 @@
+<section class="heigh-section">
+    <header>
+        <fieldset>
+            <form id="tweeterForm" name="tweeterForm" action="<?php echo $this->form->getAction();?>" method="<?php echo $this->form->getMethod();?>">
+                <legend><strong>Enter Twitter Handle</strong></legend>
+                <?php echo $this->form->twitterhandle;?>
+                <?php echo $this->form->go->setOptions(array('onClick' => 'getList();'));?>
+                <div>
+                    <span id="twitterhandle-error"class="error-text">
+                        <?php echo $this->errorMessages['twitterhandle'][0];?>
+                    </span>
+                </div>
+            </form>
+        </fieldset>
+        <h3 id="follow-count">
+            
+        </h3>
+    </header>
+
+    <span id="loading-img" class="none loadingimg">
+        <img src="../images/loading_img.gif"/>
+    </span>
+    <div id="followers-details">
+
+    </div>
+</section>
+
+<script type="text/javascript">
+    function getList()
+    {
+        var twitterHandle = jQuery.trim($("#twitterhandle").val());
+        if(!twitterHandle)
+        {
+            $("#twitterhandle-error").html('Please enter valid twitter handle');
+        }
+        else if(twitterHandle)
+        {
+            getFollowerDetails('1',twitterHandle,'-1');
+        }
+    }
+
+    function getFollowerDetails(page,twitterId,cursor)
+    {alert(page);
+        $("#followers-details").html('');
+        $("#loading-img").removeClass('none');
+        
+        $.ajax({
+                    url:'../index.php/index/follower-details/',
+                    type:'GET',
+                    data:'twitterhandle='+twitterId+'&page='+page+'&cursor='+cursor,
+                    success:function(data)
+                    {
+                        $("#loading-img").addClass('none');
+                        $("#followers-details").html(data);
+                        $("#follow-count").html($("#follow-name-count").html());
+                        $("#follow-name-count").html('');
+                    }
+              });
+    }
+   
+</script>

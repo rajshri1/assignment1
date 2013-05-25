@@ -1,0 +1,88 @@
+<div>
+    <span id="follow-name-count" class="none">
+        <?php echo $this->twitterHandle.' has '.number_format($this->followerCount,0,"",",");?> followers
+    </span>
+<?php //official_kalam
+    if($this->paginator)
+    {
+?>
+        <article>
+            
+<?php
+            foreach($this->paginator as $key => $value)
+            {
+?>
+                <figure>
+                    <?php echo '<img height="auto" style="position:relative;" id="'.$value->followers_count.'-count-'.$value->screen_name.'-id" src="'.$value->profile_image_url.'" alt="Profile Image"/>';?>
+                    <figcaption>
+                        <?php 
+                        echo $value->screen_name.' - '.$value->followers_count;
+                        if($value->followers_count != 0)
+                        {
+                            $countArr[] = $value->followers_count;
+                        }
+                        ?>
+                    </figcaption>
+                </figure>
+<?php
+            }
+?>
+        </article>
+        <hr size="1" />
+        <div class="pagination-div">
+<?php 
+                echo $this->paginationControl($this->paginator,'Sliding','/partials/pagination-control.phtml',array('twitterhandle' => $this->twitterHandle,'nextCursor' => $this->nextCursor)); 
+?>
+        </div>
+<?php
+    }
+    else 
+    {
+        echo '<span class="no-rec-msg">No record found for entered twitter handle</span>';
+    }
+?>     
+</div>
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        <?php 
+        if($this->paginator)
+        {
+        ?>
+            
+            $('article img').each(function(key,value) 
+            {
+                var followcountArr = value.id.split('-');
+                var minDefalt = "<?php echo min($countArr);?>"
+                var maxWidth = 280;
+                var ratio = 0;
+                var width;
+                var height;
+                
+                if(followcountArr[0] == 0)
+                {
+                    ratio = Math.round(minDefalt / maxWidth,2);
+                    $("#"+followcountArr[0]+"-count-"+followcountArr[2]+"-id").css("width", minDefalt+'%');
+                }
+                else
+                {
+                    width = followcountArr[0];
+                     
+                    if(width < maxWidth)
+                    {
+                        ratio = Math.round(width / maxWidth,2);
+                        $("#"+followcountArr[0]+"-count-"+followcountArr[2]+"-id").css("width", width+'%');
+                    }
+                    else if(width > maxWidth)
+                    {
+                        ratio = Math.round(maxWidth / width,2);
+                        $("#"+followcountArr[0]+"-count-"+followcountArr[2]+"-id").css("width", Math.round(width * ratio)+'%');
+                    }
+                }
+             });
+        <?php
+        }
+        ?>
+    });
+
+</script>
